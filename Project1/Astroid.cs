@@ -38,6 +38,7 @@ namespace AstroidProjekt
             float othersideX = AstroidImg.Width + AstroidImg.Width + ScrWidth;
             float othersideY = AstroidImg.Height + AstroidImg.Height + ScrHeight;
 
+            //Makes it so the astroid appears on the other side of the screen when they leave it, making it so it cant leave the window
             if (pos.X > ScrWidth + AstroidImg.Width)
             {
                 pos.X = pos.X - othersideX;
@@ -66,6 +67,8 @@ namespace AstroidProjekt
 
         public bool IsAstroidDestroyed(int x, int y)
         {
+
+            //Checks to make sure its destroyed and changes Active to false, which make the MainGame make a new astroid
             bool isDestroyed = false;
             Rectangle rect = new Rectangle((int)(pos.X), (int)(pos.Y), AstroidImg.Width, AstroidImg.Height);
 
