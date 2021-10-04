@@ -67,7 +67,6 @@ namespace AstroidProjekt
 
         public bool IsShipDestroyed(int x, int y)
         {
-
             //Checks to make sure its destroyed and changes Active to false, But it wont make a new ship unline with the astroids
             bool isDestroyed = false;
             Rectangle rect = new Rectangle((int)(pos.X), (int)(pos.Y), ShipImg.Width, ShipImg.Height);

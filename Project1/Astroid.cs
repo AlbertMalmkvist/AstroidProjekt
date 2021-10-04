@@ -20,6 +20,12 @@ namespace AstroidProjekt
         public bool Active;
 
         public Rectangle popRect;
+
+        bool Collide()
+        {
+            Rectangle AstroidReact = new Rectangle((int)pos.X, (int)pos.Y, AstroidImg.Width, AstroidImg.Height);
+            return AstroidReact.Intersects(AstroidReact);
+        }
         public Astroid(Texture2D AstroidImg, Vector2 pos, Vector2 velocity, int ScrWidth, int ScrHeight)
         {
             this.AstroidImg = AstroidImg;
@@ -27,15 +33,19 @@ namespace AstroidProjekt
             this.velocity = velocity;
             this.ScrWidth = ScrWidth;
             this.ScrHeight = ScrHeight;
-            
+
             Active = true;
         }
 
         public void UpdateAstroid()
         {
+                if (Collide())
+                {
+                    System.Diagnostics.Debug.WriteLine("Hit");
+                }
             pos = pos + velocity;
 
-            float othersideX = AstroidImg.Width + AstroidImg.Width + ScrWidth;
+            float othersideX = AstroidImg.Width + AstroidImg.Width +MainGame.ScrWidth;
             float othersideY = AstroidImg.Height + AstroidImg.Height + ScrHeight;
 
             //Makes it so the astroid appears on the other side of the screen when they leave it, making it so it cant leave the window
@@ -57,6 +67,7 @@ namespace AstroidProjekt
                 pos.Y = pos.Y + othersideY;
             }
             pos = pos + velocity;
+
             popRect = new Rectangle((int)(pos.X), (int)(pos.Y), AstroidImg.Width, AstroidImg.Height);
         }
 

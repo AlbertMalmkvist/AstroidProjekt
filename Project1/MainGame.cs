@@ -9,8 +9,8 @@ namespace AstroidProjekt
     public class MainGame : Game
     {
         //All ints used through out the program
-        public int ScrWidth;
-        public int ScrHeight;
+        static public int ScrWidth;
+        static public int ScrHeight;
         public int score;
         public int lives = 5;
         public int Timer = 200;
@@ -18,6 +18,7 @@ namespace AstroidProjekt
         //Created with the program
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        private RenderTarget2D Screen;
 
         //All Texture2D used through out the program
         public Texture2D Background;
@@ -59,6 +60,11 @@ namespace AstroidProjekt
 
         protected override void Initialize()
         {
+            //Screen = new RenderTarget2D(GraphicsDevice, 1280, 1280);
+            //graphics.PreferredBackBufferHeight = 1280;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.ApplyChanges();
+
             base.Initialize();
         }
 
@@ -86,33 +92,40 @@ namespace AstroidProjekt
             rand = new Random();
 
             //Creates the initial astroids
-            for (int a = 0; a <= 2; a++){
-            int YDirection = rand.Next(a + 1, a + 1);
-            int XDirection = rand.Next(a + 1, a + 1);
+            for (int a = 0; a <= 1; a++)
+            {
+                int YDirection = rand.Next(a + 1, a + 1);
+                int XDirection = rand.Next(a + 1, a + 1);
 
-            //Makes sure they are created outside the screen
-            int startY = ScrWidth + Astroids.Width;
-            int startx = ScrWidth + Astroids.Height;
+                //Makes sure they are created outside the screen
+                int startY = ScrWidth + Astroids.Width;
+                int startx = ScrWidth + Astroids.Height;
+                if (a == 1)
+                {
+                    startx = -startx / 2;
+                }
 
-            Vector2 startpos = new Vector2(startY, startx);
-            Vector2 direction = new Vector2(YDirection, XDirection);
-            astroid = new Astroid(Astroids, startpos, direction, ScrWidth, ScrHeight);
+                Vector2 startpos = new Vector2(startY, startx);
+                Vector2 direction = new Vector2(YDirection, XDirection);
+                astroid = new Astroid(Astroids, startpos, direction, ScrWidth, ScrHeight);
 
-            AstroidList.Add(astroid);
+                AstroidList.Add(astroid);
             }
 
             //Creates the spaceships, used the if/else if to make sure they dont get the same values, creates 6 instead of 5 since one seems to dissapear a few seconds after the program starts
-            for (int b = 0; b <= 5; b++){
+            for (int b = 0; b <= 5; b++)
+            {
 
                 int startY = ScrWidth + Ships.Width;
                 int startx = ScrWidth + Ships.Height;
 
-                if(b == 0){
-                Vector2 direction = new Vector2(1, 3);
-                Vector2 startpos = new Vector2(startY, startx);
+                if (b == 0)
+                {
+                    Vector2 direction = new Vector2(1, 3);
+                    Vector2 startpos = new Vector2(startY, startx);
 
-                ship = new Ship(Ships, startpos, direction, ScrWidth, ScrHeight);
-                ShipList.Add(ship);
+                    ship = new Ship(Ships, startpos, direction, ScrWidth, ScrHeight);
+                    ShipList.Add(ship);
                 }
 
                 else if (b == 1)
@@ -276,8 +289,9 @@ namespace AstroidProjekt
             spriteBatch.Draw(Background, Vector2.Zero, Color.White);
 
             //Makes it so it runs the draw progeam each time a new astroid is added
-            foreach (Astroid astroid in AstroidList){
-            astroid.DrawAstroid(spriteBatch);
+            foreach (Astroid astroid in AstroidList)
+            {
+                astroid.DrawAstroid(spriteBatch);
             }
             //Draws each ship while making a equal amount of hearts that are linked to the ships
             foreach (Ship ship in ShipList)
